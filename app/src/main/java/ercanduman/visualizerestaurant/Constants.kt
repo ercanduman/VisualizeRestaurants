@@ -6,4 +6,6 @@ package ercanduman.visualizerestaurant
  */
 object Constants {
     const val JSON_FILE_NAME = "sample_android.json"
+
+    const val DB_VERSION = 1
 }

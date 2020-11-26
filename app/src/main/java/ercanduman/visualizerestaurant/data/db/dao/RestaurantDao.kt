@@ -33,8 +33,10 @@ interface RestaurantDao {
      *
      * This function will LiveData that we can observe and changes later on.
      *
+     * When boolean used in Room, it automatically stores 1 for true and 0 for false.
+     *
      * @return LiveData<List<Restaurant>>
      */
-    @Query("SELECT * FROM Restaurant ORDER BY isFavorite, sortingValue =:sortingValue ASC")
+    @Query("SELECT * FROM Restaurant ORDER BY isFavorite DESC, LOWER(:sortingValue) ASC")
     fun getAllRestaurants(sortingValue: SortingValues): LiveData<List<Restaurant>>
 }
