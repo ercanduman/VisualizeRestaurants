@@ -35,7 +35,7 @@ class AppRepository @Inject constructor(
             val count = dao.getCount()
             if (count == 0) {
                 val restaurants = localSource.getRestaurants()
-                dao.insert(restaurants)
+                dao.insert(restaurants.restaurants)
             }
             dao.getAllRestaurants()
         }
