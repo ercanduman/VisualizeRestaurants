@@ -1,9 +1,10 @@
-package ercanduman.visualizerestaurant.data.db.entity
+package ercanduman.visualizerestaurant.data.datasource
 
 import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import ercanduman.visualizerestaurant.Constants
+import ercanduman.visualizerestaurant.data.db.entity.Restaurant
 
 /**
  * Responsible for reading json file from assets and returns list of Restaurants based on file content.

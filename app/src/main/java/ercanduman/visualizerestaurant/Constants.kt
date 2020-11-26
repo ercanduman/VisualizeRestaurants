@@ -5,5 +5,5 @@ package ercanduman.visualizerestaurant
  * @since  26.11.2020
  */
 object Constants {
-    const val JSON_FILE_NAME = ""
+    const val JSON_FILE_NAME = "sample_android.json"
 }
