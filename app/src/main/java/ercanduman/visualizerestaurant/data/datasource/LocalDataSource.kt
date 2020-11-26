@@ -13,25 +13,22 @@ import ercanduman.visualizerestaurant.data.db.entity.Restaurant
  * @since  26.11.2020
  */
 
-object LocalDataSource {
+class LocalDataSource(private val context: Context) {
     /**
      * Reads JSON file and returns list of Restaurant based of file content.
      *
-     * @param context Context
      * @return List<Restaurant>
      */
-    fun getRestaurants(context: Context): List<Restaurant> {
-        val content = getFileContent(context)
-        return Gson().fromJson(content, object : TypeToken<List<Restaurant>>() {}.type)
+    fun getRestaurants(): List<Restaurant> {
+        return Gson().fromJson(getFileContent(), object : TypeToken<List<Restaurant>>() {}.type)
     }
 
     /**
      * Reads JSON file from assets folder and returns file content.
      *
-     * @param context Context
      * @return File content as String
      */
-    private fun getFileContent(context: Context): String = context.assets
+    private fun getFileContent(): String = context.assets
         .open(Constants.JSON_FILE_NAME)
         .bufferedReader()
         .use { it.readText() }
