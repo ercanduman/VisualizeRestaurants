@@ -38,8 +38,8 @@ interface RestaurantDao {
      *
      * @return LiveData<List<Restaurant>>
      */
-    @Query("SELECT * FROM Restaurant ORDER BY isFavorite DESC")
-    fun getAllRestaurants(sortType: String): LiveData<List<Restaurant>>
+    @Query("SELECT * FROM Restaurant")
+    fun getAllRestaurants(): LiveData<List<Restaurant>>
 
     /**
      * Returns count of saved items.
