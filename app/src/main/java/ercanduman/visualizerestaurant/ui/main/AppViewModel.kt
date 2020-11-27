@@ -47,19 +47,17 @@ class AppViewModel
 
     private fun sortItems(items: List<Restaurant>) =
         items.sortedWith(
-            compareByDescending<Restaurant> { it.isFavorite }   // favorites always at top.
-                .thenComparing(::compareByOpeningState)         // Sort based on Opening state
-                .thenComparing { o1, o2 ->
-                    compareByBestMatch(o1, o2, sortType.name) // Sort based on Sorting Option
-                }
+            compareBy<Restaurant> { it.isFavorite }      // Favorites always at top.
+                .thenComparing(::compareByOpeningState)  // Sort based on Opening state
+                .thenComparing(::compareBySortingOption) // Sort based on Sorting Option
+                .reversed()
         )
 
-    private fun compareByBestMatch(
+    private fun compareBySortingOption(
         o1: Restaurant,
-        o2: Restaurant,
-        fieldName: String
+        o2: Restaurant
     ): Int {
-        return when (fieldName) {
+        return when (sortType.name) {
             "averageProductPrice" -> o1.sortingValues.averageProductPrice.compareTo(o2.sortingValues.averageProductPrice)
             "bestMatch" -> o1.sortingValues.bestMatch.compareTo(o2.sortingValues.bestMatch)
             "deliveryCosts" -> o1.sortingValues.deliveryCosts.compareTo(o2.sortingValues.deliveryCosts)
@@ -72,6 +70,12 @@ class AppViewModel
         }
     }
 
-    private fun compareByOpeningState(o1: Restaurant, o2: Restaurant) =
-        o1.status.length.compareTo(o2.status.length)
+    private fun compareByOpeningState(o1: Restaurant, o2: Restaurant): Int {
+        val compareStatus = o1.status.compareTo(o2.status)
+        if (compareStatus != 0) {
+            if (o1.status == "open") return 1
+            else if (o2.status == "open") return -1
+        }
+        return compareStatus
+    }
 }
