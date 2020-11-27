@@ -55,6 +55,10 @@ class MainActivity : AppCompatActivity(), AppAdapter.ItemClickListener {
 
     override fun onItemClicked(position: Int) {
         val currentItem = appAdapter.getCurrentItem(position)
-        Toast.makeText(this, "Clicked on ${currentItem.name}", Toast.LENGTH_SHORT).show()
+        val favorite = currentItem.isFavorite
+
+        currentItem.isFavorite = favorite.not()
+        appAdapter.notifyItemChanged(position)
+        viewModel.update(currentItem)
     }
 }

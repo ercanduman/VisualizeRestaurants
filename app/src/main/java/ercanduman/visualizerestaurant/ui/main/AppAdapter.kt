@@ -68,7 +68,7 @@ class AppAdapter(private val listener: ItemClickListener) :
             /**
              * Item clicks will be passed to listener
              */
-            itemView.setOnClickListener {
+            itemView.item_favorite.setOnClickListener {
                 val position = adapterPosition
 
                 /**

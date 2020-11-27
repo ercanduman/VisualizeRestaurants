@@ -39,4 +39,11 @@ class AppRepository @Inject constructor(
             dao.getAllRestaurants()
         }
     }
+
+    /**
+     * Sends passed object to data access object (DAO).
+     *
+     * @param restaurant Restaurant
+     */
+    suspend fun update(restaurant: Restaurant) = dao.update(restaurant)
 }

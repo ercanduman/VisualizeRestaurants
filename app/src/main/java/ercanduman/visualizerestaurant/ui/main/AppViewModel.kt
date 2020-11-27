@@ -2,7 +2,10 @@ package ercanduman.visualizerestaurant.ui.main
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import ercanduman.visualizerestaurant.data.db.entity.Restaurant
 import ercanduman.visualizerestaurant.data.repository.AppRepository
+import kotlinx.coroutines.launch
 
 /**
  * The ViewModel will be available for creation by the HiltViewModelFactory and can be retrieved by
@@ -21,5 +24,13 @@ class AppViewModel
      *
      * @return LiveData<List<Restaurant>>
      */
-    suspend fun getRestaurants() = repository.getRestaurants(sortType.name)
+    suspend fun getRestaurants() = repository.getRestaurants()
+
+    /**
+     * Updates object and send parameter object to repository.
+     * @param restaurant Restaurant
+     */
+    fun update(restaurant: Restaurant) {
+        viewModelScope.launch { repository.update(restaurant) }
+    }
 }
