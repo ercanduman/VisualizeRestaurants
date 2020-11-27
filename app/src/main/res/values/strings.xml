@@ -8,4 +8,5 @@
     <string name="default_text_restaurant_name">Restaurant Name</string>
     <string name="default_text_open">(Open)</string>
     <string name="default_text_sorting_value">Best Match</string>
+    <string name="default_text_search">Search</string>
 </resources>
