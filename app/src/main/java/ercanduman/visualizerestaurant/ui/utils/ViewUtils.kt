@@ -1,6 +1,7 @@
 package ercanduman.visualizerestaurant.ui.utils
 
 import android.util.Log
+import android.view.View
 import ercanduman.visualizerestaurant.BuildConfig
 
 /**
@@ -12,4 +13,12 @@ import ercanduman.visualizerestaurant.BuildConfig
 
 fun Any.logd(message: String) {
     if (BuildConfig.DEBUG) Log.d(this.javaClass.name, message)
+}
+
+fun View.show() {
+    visibility = View.VISIBLE
+}
+
+fun View.hide() {
+    visibility = View.GONE
 }

@@ -7,7 +7,7 @@
     tools:context=".ui.main.MainActivity">
 
     <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/main_toolbar"
+        android:id="@+id/main_material_toolbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/purple_700"
@@ -27,7 +27,7 @@
         android:entries="@array/filter_options"
         android:padding="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/main_toolbar" />
+        app:layout_constraintTop_toBottomOf="@id/main_material_toolbar" />
 
     <TextView
         android:id="@+id/main_filter_by"
@@ -37,7 +37,7 @@
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/main_spinner_filter"
         app:layout_constraintEnd_toStartOf="@+id/main_spinner_filter"
-        app:layout_constraintTop_toBottomOf="@id/main_toolbar" />
+        app:layout_constraintTop_toBottomOf="@id/main_material_toolbar" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/main_recycler_view_restaurants"

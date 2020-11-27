@@ -8,7 +8,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import ercanduman.visualizerestaurant.R
+import ercanduman.visualizerestaurant.ui.utils.hide
+import ercanduman.visualizerestaurant.ui.utils.show
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main_toolbar.*
+import kotlinx.android.synthetic.main.activity_main_toolbar_search.*
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -20,12 +24,24 @@ class MainActivity : AppCompatActivity(), AppAdapter.ItemClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        initToolbarActions()
 
         appAdapter = AppAdapter(this)
         setupRecyclerView()
         initSpinner()
 
         loadData()
+    }
+
+    private fun initToolbarActions() {
+        main_toolbar_search_icon.setOnClickListener {
+            main_toolbar.hide()
+            main_parent_toolbar_search.show()
+        }
+        search_toolbar_cancel.setOnClickListener {
+            main_toolbar.show()
+            main_parent_toolbar_search.hide()
+        }
     }
 
     private fun initSpinner() {
