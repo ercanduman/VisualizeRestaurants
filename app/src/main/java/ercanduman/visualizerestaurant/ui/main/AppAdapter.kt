@@ -89,7 +89,9 @@ class AppAdapter(private val listener: ItemClickListener) :
         val restaurant = listDiffer.currentList[position]
         holder.itemView.apply {
             item_name.text = restaurant.name
-            item_opening_state.text = restaurant.status
+            item_opening_state.text =
+                context.getString(R.string.format_opening_state, restaurant.status)
+
             item_sorting_value.text = restaurant.sortingValues.bestMatch.toString()
 
             val drawable =

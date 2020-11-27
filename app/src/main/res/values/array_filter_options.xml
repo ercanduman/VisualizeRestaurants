@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="filter_options">
-        <item>Average Product Price</item>
         <item>Best Match</item>
-        <item>Delivery Costs</item>
-        <item>Distance</item>
-        <item>Minimum Cost</item>
         <item>Newest</item>
-        <item>Popularity</item>
         <item>Rating Average</item>
+        <item>Distance</item>
+        <item>Popularity</item>
+        <item>Average Product Price</item>
+        <item>Delivery Costs</item>
+        <item>Minimum Cost</item>
     </string-array>
 </resources>

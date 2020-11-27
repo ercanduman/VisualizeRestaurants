@@ -7,5 +7,12 @@ package ercanduman.visualizerestaurant.ui.main
  * @since  26.11.2020
  */
 enum class SortType {
-    averageProductPrice, bestMatch, deliveryCosts, distance, minCost, newest, popularity, ratingAverage,
+    bestMatch,
+    newest,
+    ratingAverage,
+    distance,
+    popularity,
+    averageProductPrice,
+    deliveryCosts,
+    minCost,
 }

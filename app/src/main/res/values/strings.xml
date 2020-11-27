@@ -1,7 +1,11 @@
 <resources>
     <string name="app_name">Visualize Restaurants</string>
     <string name="sort_by">Sort By:</string>
+
+    <string name="format_opening_state">(%s)</string>
+
+    <!-- Default String value -->
     <string name="default_text_restaurant_name">Restaurant Name</string>
-    <string name="default_text_open">Open</string>
+    <string name="default_text_open">(Open)</string>
     <string name="default_text_sorting_value">Best Match</string>
 </resources>
