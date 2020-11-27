@@ -14,10 +14,12 @@ import ercanduman.visualizerestaurant.data.repository.AppRepository
 class AppViewModel
 @ViewModelInject constructor(private val repository: AppRepository) : ViewModel() {
 
+    var sortType = SortType.popularity
+
     /**
      * Fetches all data from repository and returns LiveData of restaurant list.
      *
      * @return LiveData<List<Restaurant>>
      */
-    suspend fun getRestaurants() = repository.getRestaurants()
+    suspend fun getRestaurants() = repository.getRestaurants(sortType.name)
 }

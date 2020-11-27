@@ -1,4 +1,4 @@
-package ercanduman.visualizerestaurant.data.db.entity
+package ercanduman.visualizerestaurant.ui.main
 
 /**
  * Sorting options

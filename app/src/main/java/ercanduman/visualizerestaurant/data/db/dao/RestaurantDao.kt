@@ -3,7 +3,6 @@ package ercanduman.visualizerestaurant.data.db.dao
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import ercanduman.visualizerestaurant.data.db.entity.Restaurant
-import ercanduman.visualizerestaurant.data.db.entity.SortType
 
 /**
  * Data Access Object which contains functions for database queries.
@@ -39,8 +38,8 @@ interface RestaurantDao {
      *
      * @return LiveData<List<Restaurant>>
      */
-    @Query("SELECT * FROM Restaurant ORDER BY isFavorite DESC, LOWER(:sortingValue) ASC")
-    fun getAllRestaurants(sortingValue: String? = SortType.averageProductPrice.name): LiveData<List<Restaurant>>
+    @Query("SELECT * FROM Restaurant ORDER BY isFavorite DESC")
+    fun getAllRestaurants(sortType: String): LiveData<List<Restaurant>>
 
     /**
      * Returns count of saved items.

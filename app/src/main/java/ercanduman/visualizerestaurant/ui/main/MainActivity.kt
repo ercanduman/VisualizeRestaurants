@@ -1,6 +1,8 @@
 package ercanduman.visualizerestaurant.ui.main
 
 import android.os.Bundle
+import android.view.View
+import android.widget.AdapterView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -21,8 +23,23 @@ class MainActivity : AppCompatActivity() {
 
         appAdapter = AppAdapter()
         setupRecyclerView()
+        initSpinner()
 
         loadData()
+    }
+
+    private fun initSpinner() {
+        main_spinner_filter.apply {
+            setSelection(viewModel.sortType.ordinal)
+            onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(aV: AdapterView<*>?, v: View?, position: Int, i: Long) {
+                    viewModel.sortType = SortType.values()[position]
+                    loadData()
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+            }
+        }
     }
 
     private fun loadData() = lifecycleScope.launch {

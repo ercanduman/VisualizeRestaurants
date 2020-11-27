@@ -30,13 +30,13 @@ class AppRepository @Inject constructor(
      *
      * @return LiveData<List<Restaurant>>
      */
-    suspend fun getRestaurants(): LiveData<List<Restaurant>> {
+    suspend fun getRestaurants(sortType: String): LiveData<List<Restaurant>> {
         return withContext(Dispatchers.IO) {
             val count = dao.getCount()
             if (count == 0) {
                 dao.insert(localSource.getRestaurants())
             }
-            dao.getAllRestaurants()
+            dao.getAllRestaurants(sortType)
         }
     }
 }
