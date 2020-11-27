@@ -17,7 +17,8 @@ import kotlinx.android.synthetic.main.list_item_restaurant.view.*
  * @author ERCAN DUMAN
  * @since  27.11.2020
  */
-class AppAdapter : RecyclerView.Adapter<AppAdapter.ItemViewHolder>() {
+class AppAdapter(private val listener: ItemClickListener) :
+    RecyclerView.Adapter<AppAdapter.ItemViewHolder>() {
 
     /**
      * DiffUtil is a utility class that calculates the differences between two lists.
@@ -54,7 +55,35 @@ class AppAdapter : RecyclerView.Adapter<AppAdapter.ItemViewHolder>() {
      */
     fun submitList(list: List<Restaurant>) = listDiffer.submitList(list)
 
-    inner class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+    /**
+     * Gets item from list based on position
+     *
+     * @param position Int item position
+     * @return Restaurant
+     */
+    fun getCurrentItem(position: Int): Restaurant = listDiffer.currentList[position]
+
+    inner class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        init {
+            /**
+             * Item clicks will be passed to listener
+             */
+            itemView.setOnClickListener {
+                val position = adapterPosition
+
+                /**
+                 * Check if position is valid.
+                 *
+                 * In delete or new insertion processes if list item clicked,
+                 * it is possible to click on an item which is animating during process
+                 * and its position might be invalid.
+                 */
+                if (position != RecyclerView.NO_POSITION) {
+                    listener.onItemClicked(position)
+                }
+            }
+        }
+    }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val restaurant = listDiffer.currentList[position]
@@ -77,4 +106,8 @@ class AppAdapter : RecyclerView.Adapter<AppAdapter.ItemViewHolder>() {
     }
 
     override fun getItemCount(): Int = listDiffer.currentList.size
+
+    interface ItemClickListener {
+        fun onItemClicked(position: Int)
+    }
 }

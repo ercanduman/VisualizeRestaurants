@@ -3,6 +3,7 @@ package ercanduman.visualizerestaurant.ui.main
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -12,7 +13,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), AppAdapter.ItemClickListener {
 
     private val viewModel: AppViewModel by viewModels()
     private lateinit var appAdapter: AppAdapter
@@ -21,7 +22,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        appAdapter = AppAdapter()
+        appAdapter = AppAdapter(this)
         setupRecyclerView()
         initSpinner()
 
@@ -50,5 +51,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupRecyclerView() = main_recycler_view_restaurants.apply {
         adapter = appAdapter
+    }
+
+    override fun onItemClicked(position: Int) {
+        val currentItem = appAdapter.getCurrentItem(position)
+        Toast.makeText(this, "Clicked on ${currentItem.name}", Toast.LENGTH_SHORT).show()
     }
 }
