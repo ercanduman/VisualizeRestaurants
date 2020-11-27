@@ -14,7 +14,7 @@ import javax.inject.Inject
  *
  * Notice: Here Constructor Injection used instead of Field Injection because when field injection used later on
  * it cannot be clear what objects injected in Repository and classes will be tightly coupled.
- * For more drawback of field Injection: https://stackoverflow.com/a/39892204/4308897
+ * For more drawbacks of field Injection: https://stackoverflow.com/a/39892204/4308897
  *
  * @author ERCAN DUMAN
  * @since  26.11.2020
