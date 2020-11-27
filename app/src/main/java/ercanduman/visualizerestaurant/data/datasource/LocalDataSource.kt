@@ -4,7 +4,8 @@ import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import ercanduman.visualizerestaurant.Constants
-import ercanduman.visualizerestaurant.data.db.entity.Restaurants
+import ercanduman.visualizerestaurant.data.db.entity.GsonHelperClass
+import ercanduman.visualizerestaurant.data.db.entity.Restaurant
 
 /**
  * Responsible for reading json file from assets and returns list of Restaurants based on file content.
@@ -19,9 +20,11 @@ class LocalDataSource(private val context: Context) {
      *
      * @return List<Restaurant>
      */
-    fun getRestaurants(): Restaurants {
+    fun getRestaurants(): List<Restaurant> {
         val content = getFileContent()
-        return Gson().fromJson(content, object : TypeToken<Restaurants>() {}.type)
+        val helperClass: GsonHelperClass =
+            Gson().fromJson(content, object : TypeToken<GsonHelperClass>() {}.type)
+        return helperClass.restaurants
     }
 
     /**

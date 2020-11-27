@@ -13,5 +13,11 @@ import ercanduman.visualizerestaurant.data.repository.AppRepository
  */
 class AppViewModel
 @ViewModelInject constructor(private val repository: AppRepository) : ViewModel() {
+
+    /**
+     * Fetches all data from repository and returns LiveData of restaurant list.
+     *
+     * @return LiveData<List<Restaurant>>
+     */
     suspend fun getRestaurants() = repository.getRestaurants()
 }
