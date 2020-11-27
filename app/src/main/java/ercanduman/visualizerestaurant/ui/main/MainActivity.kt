@@ -55,16 +55,7 @@ class MainActivity : AppCompatActivity(), AppAdapter.ItemClickListener {
             addTextChangedListener {
                 val searchText = text.toString().toLowerCase(Locale.getDefault())
 
-                val filteredList = mutableListOf<Restaurant>()
-                if (searchText.isEmpty()) {
-                    filteredList.addAll(mRestaurant)
-                } else {
-                    filteredList.addAll(
-                        mRestaurant.filter {
-                            it.name.toLowerCase(Locale.getDefault()).contains(searchText)
-                        })
-                }
-
+                val filteredList = getFilteredRestaurants(searchText)
                 if (filteredList.isEmpty()) {
                     val message: String = getString(R.string.format_item_not_found, searchText)
                     showContent(false, message)
@@ -74,6 +65,11 @@ class MainActivity : AppCompatActivity(), AppAdapter.ItemClickListener {
                 }
             }
         }
+    }
+
+    private fun getFilteredRestaurants(searchText: String): List<Restaurant> {
+        return if (searchText.isEmpty()) mRestaurant
+        else mRestaurant.filter { it.name.toLowerCase(Locale.getDefault()).contains(searchText) }
     }
 
     private fun showContent(show: Boolean, message: String?) {
