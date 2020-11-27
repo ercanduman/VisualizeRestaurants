@@ -3,6 +3,7 @@
     <string name="sort_by">Sort By:</string>
 
     <string name="format_opening_state">(%s)</string>
+    <string name="format_item_not_found">"Restaurant not found for Text: %s"</string>
 
     <!-- Default String value -->
     <string name="default_text_restaurant_name">Restaurant Name</string>

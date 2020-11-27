@@ -48,4 +48,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/main_spinner_filter" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/main_not_found"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center|top"
+        android:padding="16dp"
+        android:text="@string/format_item_not_found"
+        android:textSize="20sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_spinner_filter"
+        tools:visibility="visible" />
 </androidx.constraintlayout.widget.ConstraintLayout>
