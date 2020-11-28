@@ -45,9 +45,20 @@ class MainActivity : AppCompatActivity(), AppAdapter.ItemClickListener {
         }
         main_toolbar_search_cancel.setOnClickListener {
             main_toolbar.show()
-            main_toolbar_search.hide()
+            resetSearch()
         }
         applySearch()
+    }
+
+    private fun resetSearch() {
+        main_toolbar_search_text_field.setText("")
+        main_toolbar_search.hide()
+    }
+
+    override fun onBackPressed() {
+        val searchText = main_toolbar_search_text_field.text.toString()
+        if (searchText.isEmpty().not()) resetSearch()
+        else super.onBackPressed()
     }
 
     private fun applySearch() {
