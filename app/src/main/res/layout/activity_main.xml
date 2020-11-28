@@ -47,7 +47,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/main_spinner_filter" />
+        app:layout_constraintTop_toBottomOf="@+id/main_spinner_filter"
+        tools:listitem="@layout/list_item_restaurant" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/main_not_found"

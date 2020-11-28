@@ -45,6 +45,22 @@ class AppViewModel
         return allItems
     }
 
+    /**
+     * Sorts all restaurant list based on following options and returns sorted list
+     *
+     * Priority of the sorting (highest to the lowest priority)
+     *     1. Favourites: Favourite restaurants are at the top
+     *     2. Openings state:
+     *          open (top), order ahead (middle), closed (bottom)
+     *     3. Sort options which can be best match, newest, ratingAverage, etc.
+     *
+     * NOTICE:
+     *  if there are multiple favourite restaurants, then sorting should be based on
+     *  current opening state and current selected sort.
+     *
+     * @param items List<Restaurant>
+     * @return List<Restaurant>
+     */
     private fun sortItems(items: List<Restaurant>) =
         items.sortedWith(
             compareBy<Restaurant> { it.isFavorite }      // Favorites always at top.
