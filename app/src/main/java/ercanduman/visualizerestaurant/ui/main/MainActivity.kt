@@ -20,12 +20,10 @@ import java.util.*
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), AppAdapter.ItemClickListener {
-
     private val viewModel: AppViewModel by viewModels()
+
     private lateinit var appAdapter: AppAdapter
-
     private lateinit var mRestaurant: List<Restaurant>
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -38,21 +36,13 @@ class MainActivity : AppCompatActivity(), AppAdapter.ItemClickListener {
         loadData()
     }
 
-    private fun initToolbarActions() {
-        main_toolbar_search_icon.setOnClickListener {
-            main_toolbar.hide()
-            main_toolbar_search.show()
-        }
-        main_toolbar_search_cancel.setOnClickListener {
-            main_toolbar.show()
-            resetSearch()
-        }
-        applySearch()
-    }
+    override fun onItemClicked(position: Int) {
+        val currentItem = appAdapter.getCurrentItem(position)
+        val favorite = currentItem.isFavorite
 
-    private fun resetSearch() {
-        main_toolbar_search_text_field.setText("")
-        main_toolbar_search.hide()
+        currentItem.isFavorite = favorite.not()
+        appAdapter.notifyItemChanged(position)
+        viewModel.update(currentItem)
     }
 
     override fun onBackPressed() {
@@ -61,39 +51,15 @@ class MainActivity : AppCompatActivity(), AppAdapter.ItemClickListener {
         else super.onBackPressed()
     }
 
-    private fun applySearch() {
-        main_toolbar_search_text_field.apply {
-            addTextChangedListener {
-                val searchText = text.toString().toLowerCase(Locale.getDefault())
-
-                val filteredList = getFilteredRestaurants(searchText)
-                if (filteredList.isEmpty()) {
-                    val message: String = getString(R.string.format_item_not_found, searchText)
-                    showContent(false, message)
-                } else {
-                    showContent(true, null)
-                    appAdapter.submitList(filteredList)
-                }
-            }
+    private fun setupRecyclerView() {
+        main_recycler_view_restaurants.apply {
+            adapter = appAdapter
         }
     }
 
-    private fun getFilteredRestaurants(searchText: String): List<Restaurant> {
-        return if (searchText.isEmpty()) mRestaurant
-        else mRestaurant.filter { it.name.toLowerCase(Locale.getDefault()).contains(searchText) }
-    }
-
-    private fun showContent(show: Boolean, message: String?) {
-        if (show) {
-            main_recycler_view_restaurants.show()
-            main_not_found.hide()
-        } else {
-            main_recycler_view_restaurants.hide()
-            main_not_found.apply {
-                show()
-                text = message
-            }
-        }
+    private fun initToolbarActions() {
+        main_toolbar_search_icon.setOnClickListener { applySearch() }
+        main_toolbar_search_cancel.setOnClickListener { resetSearch() }
     }
 
     private fun initSpinner() {
@@ -117,16 +83,46 @@ class MainActivity : AppCompatActivity(), AppAdapter.ItemClickListener {
         })
     }
 
-    private fun setupRecyclerView() = main_recycler_view_restaurants.apply {
-        adapter = appAdapter
+    private fun applySearch() {
+        main_toolbar.hide()
+        main_toolbar_search.show()
+        main_toolbar_search_text_field.apply {
+            addTextChangedListener {
+                val searchText = text.toString().toLowerCase(Locale.getDefault())
+
+                val filteredList = getFilteredRestaurants(searchText)
+                if (filteredList.isEmpty()) {
+                    val message: String = getString(R.string.format_item_not_found, searchText)
+                    showContent(false, message)
+                } else {
+                    showContent(true, null)
+                    appAdapter.submitList(filteredList)
+                }
+            }
+        }
     }
 
-    override fun onItemClicked(position: Int) {
-        val currentItem = appAdapter.getCurrentItem(position)
-        val favorite = currentItem.isFavorite
+    private fun resetSearch() {
+        main_toolbar.show()
+        main_toolbar_search_text_field.setText("")
+        main_toolbar_search.hide()
+    }
 
-        currentItem.isFavorite = favorite.not()
-        appAdapter.notifyItemChanged(position)
-        viewModel.update(currentItem)
+    private fun getFilteredRestaurants(searchText: String): List<Restaurant> {
+        return if (searchText.isEmpty()) mRestaurant
+        else mRestaurant.filter { it.name.toLowerCase(Locale.getDefault()).contains(searchText) }
+    }
+
+    private fun showContent(show: Boolean, message: String?) {
+        if (show) {
+            main_recycler_view_restaurants.show()
+            main_not_found.hide()
+        } else {
+            main_recycler_view_restaurants.hide()
+            main_not_found.apply {
+                show()
+                text = message
+            }
+        }
     }
 }
