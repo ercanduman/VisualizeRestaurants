@@ -1,7 +1,10 @@
 package ercanduman.visualizerestaurant.ui.main
 
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
@@ -46,5 +49,70 @@ class MainActivityTest {
     fun test_launch_activity_and_check_its_title_has_correct_text() {
         onView(withId(R.id.main_material_toolbar)).check(matches(isDisplayed()))
         onView(withText(R.string.app_name)).check(matches(isDisplayed()))
+    }
+
+    /**
+     * Search functionality related test cases
+     */
+    @Test
+    fun test_search_button_visibility_then_click_and_check_if_search_layout_displayed() {
+        onView(withId(R.id.main_toolbar_search_icon)).check(matches(isDisplayed()))
+        onView(withId(R.id.main_toolbar_search_icon)).perform(click())
+        onView(withId(R.id.main_toolbar_search_cancel)).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun test_check_search_layout_displayed_and_type_text_and_check_text_visibility() {
+        onView(withId(R.id.main_toolbar_search_icon)).perform(click())
+        onView(withId(R.id.main_toolbar_search_text_field)).check(matches(isDisplayed()))
+
+        val someText = "SOME_TEXT"
+        onView(withId(R.id.main_toolbar_search_text_field)).perform(typeText(someText))
+        onView(withText(someText)).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun test_search_by_invalid_text_and_check_not_found_view_displayed() {
+        onView(withId(R.id.main_toolbar_search_icon)).perform(click())
+
+        val invalidText = "INVALID_TEXT"
+        onView(withId(R.id.main_toolbar_search_text_field)).perform(typeText(invalidText))
+        onView(withId(R.id.main_not_found)).check(matches(isDisplayed()))
+    }
+
+    /**
+     * RecyclerView related test cases
+     */
+    @Test
+    fun test_check_if_recyclerView_displayed() {
+        onView(withId(R.id.main_recycler_view_restaurants)).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun test_check_is_recycler_view_items_can_be_clicked() {
+        onView(withId(R.id.main_recycler_view_restaurants))
+            .perform(actionOnItemAtPosition<AppAdapter.ItemViewHolder>(0, click()))
+    }
+
+    @Test
+    fun test_search_by_invalid_text_and_check_recycler_view_hidden_and_NOT_FOUND_view_displayed() {
+        onView(withId(R.id.main_toolbar_search_icon)).perform(click())
+
+        val invalidText = "INVALID_TEXT"
+        onView(withId(R.id.main_toolbar_search_text_field)).perform(typeText(invalidText))
+
+        onView(withId(R.id.main_recycler_view_restaurants))
+            .check(matches(withEffectiveVisibility(Visibility.GONE)))
+        onView(withId(R.id.main_not_found)).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun test_search_for_restaurant_name_ROTI_and_check_if_item_displayed_on_recyclerview() {
+        onView(withId(R.id.main_toolbar_search_icon)).perform(click())
+
+        val inputText = "Roti"
+        val restaurantName = "Roti Shop"
+        onView(withId(R.id.main_toolbar_search_text_field)).perform(typeText(inputText))
+        onView(withText(restaurantName)).check(matches(isDisplayed()))
     }
 }
