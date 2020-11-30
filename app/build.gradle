@@ -16,7 +16,8 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        // testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "ercanduman.visualizerestaurant.HiltTestRunner"
     }
 
     buildTypes {
@@ -58,6 +59,9 @@ dependencies {
     // Architecture Components Test
     androidTestImplementation "androidx.arch.core:core-testing:2.1.0"
     androidTestImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.2'
+    //DI for testing
+    androidTestImplementation "com.google.dagger:hilt-android-testing:2.29.1-alpha"
+    kaptAndroidTest "com.google.dagger:hilt-android-compiler:2.29.1-alpha"
 
     // Room Database and Room Kotlin Extensions
     implementation "androidx.room:room-ktx:2.2.5"

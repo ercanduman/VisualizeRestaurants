@@ -1,26 +1,28 @@
 package ercanduman.visualizerestaurant.data.db
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.room.Room
-import androidx.test.core.app.ApplicationProvider
-import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import ercanduman.visualizerestaurant.data.db.dao.RestaurantDao
 import ercanduman.visualizerestaurant.data.db.entity.Restaurant
 import ercanduman.visualizerestaurant.data.db.entity.SortingValues
 import ercanduman.visualizerestaurant.util.getOrAwaitValue
 import junit.framework.TestCase.assertEquals
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
+import javax.inject.Inject
+import javax.inject.Named
 
 /**
  * @author ERCAN DUMAN
  * @since  29.11.2020
  */
-@RunWith(AndroidJUnit4ClassRunner::class)
+@ExperimentalCoroutinesApi
+@HiltAndroidTest
 class AppDatabaseTest {
     /**
      * Swaps the background executor used by the Architecture Components which executes each task synchronously.
@@ -28,8 +30,20 @@ class AppDatabaseTest {
     @get:Rule
     val taskExecutorRule = InstantTaskExecutorRule()
 
+    /**
+     * A TestRule for Hilt that can be used with Instrumentation tests.
+     * This rule is required. The Dagger component will not be created without this test rule.
+     */
+    @get:Rule
+    val hiltRule = HiltAndroidRule(this)
+
+    /**
+     * Inject AppDatabase from TestModule via its name.
+     */
+    @Inject
+    @Named("test_db")
+    lateinit var database: AppDatabase
     private lateinit var dao: RestaurantDao
-    private lateinit var database: AppDatabase
 
     @Before
     fun setup() {
@@ -38,11 +52,13 @@ class AppDatabaseTest {
          * which means it wont effect our real AppDatabase in persistence storage. And no need to
          * create instance of database for each test case.
          */
+        /*
+        // Dagger-Hilt will generate instance of database.
         database = Room.inMemoryDatabaseBuilder(
             ApplicationProvider.getApplicationContext(),
             AppDatabase::class.java
-        ).build()
-
+        ).build() */
+        hiltRule.inject()
         dao = database.dao()
     }
 
