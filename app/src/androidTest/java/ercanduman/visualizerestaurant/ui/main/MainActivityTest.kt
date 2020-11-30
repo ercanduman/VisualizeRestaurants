@@ -7,11 +7,11 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
-import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import ercanduman.visualizerestaurant.R
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 
 /**
  * UI test cases for MainActivity.
@@ -19,8 +19,11 @@ import org.junit.runner.RunWith
  * @author ERCAN DUMAN
  * @since 28.11.2020
  */
-@RunWith(AndroidJUnit4ClassRunner::class)
+@HiltAndroidTest
 class MainActivityTest {
+
+    @get:Rule
+    val hiltRule = HiltAndroidRule(this)
 
     /**
      * Creating a rule for activity scenario will run Before() methods, then the Test method, and finally any After() methods.
