@@ -1,6 +1,7 @@
 package ercanduman.visualizerestaurant.data.repository
 
 import androidx.lifecycle.LiveData
+import ercanduman.visualizerestaurant.data.base.BaseRepository
 import ercanduman.visualizerestaurant.data.datasource.LocalDataSource
 import ercanduman.visualizerestaurant.data.db.dao.RestaurantDao
 import ercanduman.visualizerestaurant.data.db.entity.Restaurant
@@ -22,7 +23,7 @@ import javax.inject.Inject
 class AppRepository @Inject constructor(
     private val dao: RestaurantDao,
     private val localSource: LocalDataSource
-) {
+) : BaseRepository {
     /**
      * Retrieves all items from local database and returns LiveData
      *
@@ -30,7 +31,7 @@ class AppRepository @Inject constructor(
      *
      * @return LiveData<List<Restaurant>>
      */
-    suspend fun getRestaurants(): LiveData<List<Restaurant>> {
+    override suspend fun getRestaurants(): LiveData<List<Restaurant>> {
         return withContext(Dispatchers.IO) {
             val count = dao.getCount()
             if (count == 0) {
@@ -45,5 +46,5 @@ class AppRepository @Inject constructor(
      *
      * @param restaurant Restaurant
      */
-    suspend fun update(restaurant: Restaurant) = dao.update(restaurant)
+    override suspend fun update(restaurant: Restaurant) = dao.update(restaurant)
 }
