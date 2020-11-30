@@ -8,8 +8,11 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import ercanduman.visualizerestaurant.Constants
+import ercanduman.visualizerestaurant.data.base.BaseRepository
 import ercanduman.visualizerestaurant.data.datasource.LocalDataSource
 import ercanduman.visualizerestaurant.data.db.AppDatabase
+import ercanduman.visualizerestaurant.data.db.dao.RestaurantDao
+import ercanduman.visualizerestaurant.data.repository.AppRepository
 import javax.inject.Singleton
 
 /**
@@ -62,4 +65,11 @@ object AppModule {
     @Singleton
     @Provides
     fun provideLocalDataSource(@ApplicationContext context: Context) = LocalDataSource(context)
+
+    @Singleton
+    @Provides
+    fun provideBaseRepository(
+        dao: RestaurantDao,
+        localDataSource: LocalDataSource
+    ) = AppRepository(dao, localDataSource) as BaseRepository
 }

@@ -5,8 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import ercanduman.visualizerestaurant.data.base.BaseRepository
 import ercanduman.visualizerestaurant.data.db.entity.Restaurant
-import ercanduman.visualizerestaurant.data.repository.AppRepository
 import kotlinx.coroutines.launch
 
 /**
@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
  * @since  26.11.2020
  */
 class AppViewModel
-@ViewModelInject constructor(private val repository: AppRepository) : ViewModel() {
+@ViewModelInject constructor(private val repository: BaseRepository) : ViewModel() {
 
     var sortType = SortType.popularity
 
@@ -66,8 +66,16 @@ class AppViewModel
             compareBy<Restaurant> { it.isFavorite }      // Favorites always at top.
                 .thenComparing(::compareByOpeningState)  // Sort based on Opening state
                 .thenComparing(::compareBySortingOption) // Sort based on Sorting Option
-                .reversed()
-        )
+                .reversed())
+
+    private fun compareByOpeningState(o1: Restaurant, o2: Restaurant): Int {
+        val compareStatus = o1.status.compareTo(o2.status)
+        if (compareStatus != 0) {
+            if (o1.status == "open") return 1
+            else if (o2.status == "open") return -1
+        }
+        return compareStatus
+    }
 
     private fun compareBySortingOption(
         o1: Restaurant,
@@ -84,14 +92,5 @@ class AppViewModel
             "minCost" -> o1.sortingValues.minCost.compareTo(o2.sortingValues.minCost)
             else -> 0
         }
-    }
-
-    private fun compareByOpeningState(o1: Restaurant, o2: Restaurant): Int {
-        val compareStatus = o1.status.compareTo(o2.status)
-        if (compareStatus != 0) {
-            if (o1.status == "open") return 1
-            else if (o2.status == "open") return -1
-        }
-        return compareStatus
     }
 }
