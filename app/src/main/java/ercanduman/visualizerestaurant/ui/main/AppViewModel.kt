@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 class AppViewModel
 @ViewModelInject constructor(private val repository: BaseRepository) : ViewModel() {
 
-    var sortType = SortType.popularity
+    var sortType = SortType.bestMatch
 
     /**
      * Updates object and send parameter object to repository.

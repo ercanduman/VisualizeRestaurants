@@ -19,6 +19,7 @@ import kotlinx.android.synthetic.main.list_item_restaurant.view.*
  */
 class AppAdapter(private val listener: ItemClickListener) :
     RecyclerView.Adapter<AppAdapter.ItemViewHolder>() {
+    private var sortingOption: SortType = SortType.bestMatch
 
     /**
      * DiffUtil is a utility class that calculates the differences between two lists.
@@ -55,6 +56,11 @@ class AppAdapter(private val listener: ItemClickListener) :
      */
     fun submitList(list: List<Restaurant>) = listDiffer.submitList(list)
 
+    fun setSortingOption(sortType: SortType) {
+        sortingOption = sortType
+        notifyDataSetChanged()
+    }
+
     /**
      * Gets item from list based on position
      *
@@ -89,14 +95,28 @@ class AppAdapter(private val listener: ItemClickListener) :
         val restaurant = listDiffer.currentList[position]
         holder.itemView.apply {
             item_name.text = restaurant.name
-            item_opening_state.text =
-                context.getString(R.string.format_opening_state, restaurant.status)
+            val openingState = context.getString(R.string.format_opening_state, restaurant.status)
+            item_opening_state.text = openingState
 
-            item_sorting_value.text = restaurant.sortingValues.bestMatch.toString()
+            val sortValue = context.getString(R.string.format_sort_value, getSortValue(restaurant))
+            item_sorting_value.text = sortValue
 
             val drawable =
                 if (restaurant.isFavorite) R.drawable.ic_favorite else R.drawable.ic_favorite_border
             item_favorite.setImageDrawable(ContextCompat.getDrawable(context, drawable))
+        }
+    }
+
+    private fun getSortValue(restaurant: Restaurant): String {
+        return when (sortingOption) {
+            SortType.bestMatch -> restaurant.sortingValues.bestMatch.toString()
+            SortType.newest -> restaurant.sortingValues.newest.toString()
+            SortType.ratingAverage -> restaurant.sortingValues.ratingAverage.toString()
+            SortType.distance -> restaurant.sortingValues.distance.toString()
+            SortType.popularity -> restaurant.sortingValues.popularity.toString()
+            SortType.averageProductPrice -> restaurant.sortingValues.averageProductPrice.toString()
+            SortType.deliveryCosts -> restaurant.sortingValues.deliveryCosts.toString()
+            SortType.minCost -> restaurant.sortingValues.minCost.toString()
         }
     }
 

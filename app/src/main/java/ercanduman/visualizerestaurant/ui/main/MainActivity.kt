@@ -80,6 +80,7 @@ class MainActivity : AppCompatActivity(), AppAdapter.ItemClickListener {
         viewModel.getRestaurants().observe(this@MainActivity, {
             mRestaurant = it
             appAdapter.submitList(mRestaurant)
+            appAdapter.setSortingOption(viewModel.sortType)
         })
     }
 
@@ -97,6 +98,7 @@ class MainActivity : AppCompatActivity(), AppAdapter.ItemClickListener {
                 } else {
                     showContent(true, null)
                     appAdapter.submitList(filteredList)
+                    appAdapter.setSortingOption(viewModel.sortType)
                 }
             }
         }
