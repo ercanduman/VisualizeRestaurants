@@ -1,7 +1,9 @@
 package ercanduman.visualizerestaurant
 
 import androidx.test.platform.app.InstrumentationRegistry
+import ercanduman.visualizerestaurant.data.db.AppDatabaseTest
 import ercanduman.visualizerestaurant.ui.main.MainActivityTest
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -16,9 +18,11 @@ import org.junit.runners.Suite
  *
  * See [testing documentation](http://d.android.com/tools/testing).
  */
+@ExperimentalCoroutinesApi
 @RunWith(Suite::class)
 @Suite.SuiteClasses(
-    MainActivityTest::class
+    MainActivityTest::class,
+    AppDatabaseTest::class
 )
 class UITestSuite {
     @Test

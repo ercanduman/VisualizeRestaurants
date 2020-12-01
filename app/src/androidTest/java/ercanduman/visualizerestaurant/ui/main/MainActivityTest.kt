@@ -110,7 +110,7 @@ class MainActivityTest {
     }
 
     @Test
-    fun test_search_for_restaurant_name_ROTI_and_check_if_item_displayed_on_recyclerview() {
+    fun test_search_for_restaurant_name_and_check_if_item_displayed_on_recyclerview() {
         onView(withId(R.id.main_toolbar_search_icon)).perform(click())
 
         val inputText = "Roti"
