@@ -33,6 +33,24 @@ As dependency injection, Dagger-Hilt library will be used. Dagger-Hilt takes car
 
 Repository object will be responsible to retrieve data from data sources and provide this data to ViewModel. Coroutines and suspend functions will be used for running background operations.
 
+### Restaurant List
+Main Activity is the main UI which all user interactions will be handled and also restaurants list will be displayed in MainActivity.
+
+<img src="https://raw.githubusercontent.com/ercanduman/VisualizeRestaurants/master/output/Screenshot_1606802704.png" width="25%" title="Restaurant List">
+
+### Sorting Options
+
+Spinner UI element is used for sorting options. Spinners provides a quick way to select one value from sorting options. In the default state, "bestMatches" used for restaurant list. Touching the spinner displays a dropdown menu with all other available values which can be best match, newest, rating average, distance, popularity, average product price, delivery costs or the minimum cost.
+
+<img src="https://raw.githubusercontent.com/ercanduman/VisualizeRestaurants/master/output/Screenshot_1606802733.png" width="25%" title="Sorting Options">
+
+### Filtering 
+
+Similar to WhatsApp app search toolbar added for search(filtering) functionality. Text changes in search text field applied to restaurant list and if any Restaurant's name contains queried test, then these objects listed in RecyclerView.
+
+
+<img src="https://raw.githubusercontent.com/ercanduman/VisualizeRestaurants/master/output/Screenshot_1606802759.png" width="25%" title="Filtering">
+
 
 
 
