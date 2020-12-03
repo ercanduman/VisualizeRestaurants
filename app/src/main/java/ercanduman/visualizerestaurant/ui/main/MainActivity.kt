@@ -10,11 +10,11 @@ import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import ercanduman.visualizerestaurant.R
 import ercanduman.visualizerestaurant.data.db.entity.Restaurant
+import ercanduman.visualizerestaurant.databinding.ActivityMainBinding
+import ercanduman.visualizerestaurant.databinding.ActivityMainToolbarBinding
+import ercanduman.visualizerestaurant.databinding.ActivityMainToolbarSearchBinding
 import ercanduman.visualizerestaurant.ui.utils.hide
 import ercanduman.visualizerestaurant.ui.utils.show
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main_toolbar.*
-import kotlinx.android.synthetic.main.activity_main_toolbar_search.*
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -24,11 +24,19 @@ class MainActivity : AppCompatActivity(), AppAdapter.ItemClickListener {
 
     private lateinit var appAdapter: AppAdapter
     private lateinit var mRestaurant: List<Restaurant>
+
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var toolbarBinding: ActivityMainToolbarBinding
+    private lateinit var searchBinding: ActivityMainToolbarSearchBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        initToolbarActions()
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
+        toolbarBinding = binding.activityMainToolbar
+        searchBinding = binding.activityMainToolbarSearch
+
+        initToolbarActions()
         appAdapter = AppAdapter(this)
         setupRecyclerView()
         initSpinner()
@@ -46,24 +54,24 @@ class MainActivity : AppCompatActivity(), AppAdapter.ItemClickListener {
     }
 
     override fun onBackPressed() {
-        val searchText = main_toolbar_search_text_field.text.toString()
+        val searchText = searchBinding.mainToolbarSearchTextField.text.toString()
         if (searchText.isEmpty().not()) resetSearch()
         else super.onBackPressed()
     }
 
     private fun setupRecyclerView() {
-        main_recycler_view_restaurants.apply {
+        binding.mainRecyclerViewRestaurants.apply {
             adapter = appAdapter
         }
     }
 
     private fun initToolbarActions() {
-        main_toolbar_search_icon.setOnClickListener { applySearch() }
-        main_toolbar_search_cancel.setOnClickListener { resetSearch() }
+        toolbarBinding.mainToolbarSearchIcon.setOnClickListener { applySearch() }
+        searchBinding.mainToolbarSearchCancel.setOnClickListener { resetSearch() }
     }
 
     private fun initSpinner() {
-        main_spinner_filter.apply {
+        binding.mainSpinnerFilter.apply {
             setSelection(viewModel.sortType.ordinal)
             onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(aV: AdapterView<*>?, v: View?, position: Int, i: Long) {
@@ -85,9 +93,9 @@ class MainActivity : AppCompatActivity(), AppAdapter.ItemClickListener {
     }
 
     private fun applySearch() {
-        main_toolbar.hide()
-        main_toolbar_search.show()
-        main_toolbar_search_text_field.apply {
+        toolbarBinding.mainToolbar.hide()
+        searchBinding.mainToolbarSearch.show()
+        searchBinding.mainToolbarSearchTextField.apply {
             addTextChangedListener {
                 val searchText = text.toString().toLowerCase(Locale.getDefault())
 
@@ -105,9 +113,9 @@ class MainActivity : AppCompatActivity(), AppAdapter.ItemClickListener {
     }
 
     private fun resetSearch() {
-        main_toolbar.show()
-        main_toolbar_search_text_field.setText("")
-        main_toolbar_search.hide()
+        toolbarBinding.mainToolbar.show()
+        searchBinding.mainToolbarSearchTextField.setText("")
+        searchBinding.mainToolbarSearch.hide()
     }
 
     private fun getFilteredRestaurants(searchText: String): List<Restaurant> {
@@ -117,11 +125,11 @@ class MainActivity : AppCompatActivity(), AppAdapter.ItemClickListener {
 
     private fun showContent(show: Boolean, message: String?) {
         if (show) {
-            main_recycler_view_restaurants.show()
-            main_not_found.hide()
+            binding.mainRecyclerViewRestaurants.show()
+            binding.mainNotFound.hide()
         } else {
-            main_recycler_view_restaurants.hide()
-            main_not_found.apply {
+            binding.mainRecyclerViewRestaurants.hide()
+            binding.mainNotFound.apply {
                 show()
                 text = message
             }

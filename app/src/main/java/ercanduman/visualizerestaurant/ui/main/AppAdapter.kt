@@ -1,7 +1,6 @@
 package ercanduman.visualizerestaurant.ui.main
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.AsyncListDiffer
@@ -9,7 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import ercanduman.visualizerestaurant.R
 import ercanduman.visualizerestaurant.data.db.entity.Restaurant
-import kotlinx.android.synthetic.main.list_item_restaurant.view.*
+import ercanduman.visualizerestaurant.databinding.ListItemRestaurantBinding
 
 /**
  * Responsible to provide views that represents items in list.
@@ -20,6 +19,7 @@ import kotlinx.android.synthetic.main.list_item_restaurant.view.*
 class AppAdapter(private val listener: ItemClickListener) :
     RecyclerView.Adapter<AppAdapter.ItemViewHolder>() {
     private var sortingOption: SortType = SortType.bestMatch
+    private lateinit var binding: ListItemRestaurantBinding
 
     /**
      * DiffUtil is a utility class that calculates the differences between two lists.
@@ -69,12 +69,13 @@ class AppAdapter(private val listener: ItemClickListener) :
      */
     fun getCurrentItem(position: Int): Restaurant = listDiffer.currentList[position]
 
-    inner class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ItemViewHolder(itemBinding: ListItemRestaurantBinding) :
+        RecyclerView.ViewHolder(itemBinding.root) {
         init {
             /**
              * Item clicks will be passed to listener
              */
-            itemView.item_favorite.setOnClickListener {
+            itemBinding.itemFavorite.setOnClickListener {
                 val position = adapterPosition
 
                 /**
@@ -94,16 +95,16 @@ class AppAdapter(private val listener: ItemClickListener) :
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val restaurant = listDiffer.currentList[position]
         holder.itemView.apply {
-            item_name.text = restaurant.name
+            binding.itemName.text = restaurant.name
             val openingState = context.getString(R.string.format_opening_state, restaurant.status)
-            item_opening_state.text = openingState
+            binding.itemOpeningState.text = openingState
 
             val sortValue = context.getString(R.string.format_sort_value, getSortValue(restaurant))
-            item_sorting_value.text = sortValue
+            binding.itemSortingValue.text = sortValue
 
             val drawable =
                 if (restaurant.isFavorite) R.drawable.ic_favorite else R.drawable.ic_favorite_border
-            item_favorite.setImageDrawable(ContextCompat.getDrawable(context, drawable))
+            binding.itemFavorite.setImageDrawable(ContextCompat.getDrawable(context, drawable))
         }
     }
 
@@ -121,10 +122,9 @@ class AppAdapter(private val listener: ItemClickListener) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        return ItemViewHolder(
-            LayoutInflater.from(parent.context)
-                .inflate(R.layout.list_item_restaurant, parent, false)
-        )
+        binding =
+            ListItemRestaurantBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ItemViewHolder(binding)
     }
 
     override fun getItemCount(): Int = listDiffer.currentList.size
