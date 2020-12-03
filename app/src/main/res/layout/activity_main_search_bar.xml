@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_toolbar_search"
+    android:id="@+id/main_search_bar_parent"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
@@ -13,7 +13,7 @@
     tools:visibility="visible">
 
     <ImageView
-        android:id="@+id/main_toolbar_search_cancel"
+        android:id="@+id/main_search_bar_cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -23,7 +23,7 @@
         tools:ignore="ContentDescription" />
 
     <AutoCompleteTextView
-        android:id="@+id/main_toolbar_search_text_field"
+        android:id="@+id/main_search_bar_text_field"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -37,7 +37,7 @@
         android:textColorLink="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/main_toolbar_search_cancel"
+        app:layout_constraintStart_toEndOf="@+id/main_search_bar_cancel"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

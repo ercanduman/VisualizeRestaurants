@@ -61,16 +61,16 @@ class MainActivityTest {
     fun test_search_button_visibility_then_click_and_check_if_search_layout_displayed() {
         onView(withId(R.id.main_toolbar_search_icon)).check(matches(isDisplayed()))
         onView(withId(R.id.main_toolbar_search_icon)).perform(click())
-        onView(withId(R.id.main_toolbar_search_cancel)).check(matches(isDisplayed()))
+        onView(withId(R.id.main_search_bar_cancel)).check(matches(isDisplayed()))
     }
 
     @Test
     fun test_check_search_layout_displayed_and_type_text_and_check_text_visibility() {
         onView(withId(R.id.main_toolbar_search_icon)).perform(click())
-        onView(withId(R.id.main_toolbar_search_text_field)).check(matches(isDisplayed()))
+        onView(withId(R.id.main_search_bar_text_field)).check(matches(isDisplayed()))
 
         val someText = "SOME_TEXT"
-        onView(withId(R.id.main_toolbar_search_text_field)).perform(typeText(someText))
+        onView(withId(R.id.main_search_bar_text_field)).perform(typeText(someText))
         onView(withText(someText)).check(matches(isDisplayed()))
     }
 
@@ -79,7 +79,7 @@ class MainActivityTest {
         onView(withId(R.id.main_toolbar_search_icon)).perform(click())
 
         val invalidText = "INVALID_TEXT"
-        onView(withId(R.id.main_toolbar_search_text_field)).perform(typeText(invalidText))
+        onView(withId(R.id.main_search_bar_text_field)).perform(typeText(invalidText))
         onView(withId(R.id.main_not_found)).check(matches(isDisplayed()))
     }
 
@@ -102,7 +102,7 @@ class MainActivityTest {
         onView(withId(R.id.main_toolbar_search_icon)).perform(click())
 
         val invalidText = "INVALID_TEXT"
-        onView(withId(R.id.main_toolbar_search_text_field)).perform(typeText(invalidText))
+        onView(withId(R.id.main_search_bar_text_field)).perform(typeText(invalidText))
 
         onView(withId(R.id.main_recycler_view_restaurants))
             .check(matches(withEffectiveVisibility(Visibility.GONE)))
@@ -115,7 +115,7 @@ class MainActivityTest {
 
         val inputText = "Roti"
         val restaurantName = "Roti Shop"
-        onView(withId(R.id.main_toolbar_search_text_field)).perform(typeText(inputText))
+        onView(withId(R.id.main_search_bar_text_field)).perform(typeText(inputText))
         onView(withText(restaurantName)).check(matches(isDisplayed()))
     }
 }

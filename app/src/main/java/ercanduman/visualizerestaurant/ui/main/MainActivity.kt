@@ -11,8 +11,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import ercanduman.visualizerestaurant.R
 import ercanduman.visualizerestaurant.data.db.entity.Restaurant
 import ercanduman.visualizerestaurant.databinding.ActivityMainBinding
+import ercanduman.visualizerestaurant.databinding.ActivityMainSearchBarBinding
 import ercanduman.visualizerestaurant.databinding.ActivityMainToolbarBinding
-import ercanduman.visualizerestaurant.databinding.ActivityMainToolbarSearchBinding
 import ercanduman.visualizerestaurant.ui.utils.hide
 import ercanduman.visualizerestaurant.ui.utils.show
 import kotlinx.coroutines.launch
@@ -27,14 +27,14 @@ class MainActivity : AppCompatActivity(), AppAdapter.ItemClickListener {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var toolbarBinding: ActivityMainToolbarBinding
-    private lateinit var searchBinding: ActivityMainToolbarSearchBinding
+    private lateinit var searchBinding: ActivityMainSearchBarBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         toolbarBinding = binding.activityMainToolbar
-        searchBinding = binding.activityMainToolbarSearch
+        searchBinding = binding.activityMainSearchBar
 
         initToolbarActions()
         appAdapter = AppAdapter(this)
@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity(), AppAdapter.ItemClickListener {
     }
 
     override fun onBackPressed() {
-        val searchText = searchBinding.mainToolbarSearchTextField.text.toString()
+        val searchText = searchBinding.mainSearchBarTextField.text.toString()
         if (searchText.isEmpty().not()) resetSearch()
         else super.onBackPressed()
     }
@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity(), AppAdapter.ItemClickListener {
 
     private fun initToolbarActions() {
         toolbarBinding.mainToolbarSearchIcon.setOnClickListener { applySearch() }
-        searchBinding.mainToolbarSearchCancel.setOnClickListener { resetSearch() }
+        searchBinding.mainSearchBarCancel.setOnClickListener { resetSearch() }
     }
 
     private fun initSpinner() {
@@ -94,8 +94,8 @@ class MainActivity : AppCompatActivity(), AppAdapter.ItemClickListener {
 
     private fun applySearch() {
         toolbarBinding.mainToolbar.hide()
-        searchBinding.mainToolbarSearch.show()
-        searchBinding.mainToolbarSearchTextField.apply {
+        searchBinding.mainSearchBarParent.show()
+        searchBinding.mainSearchBarTextField.apply {
             addTextChangedListener {
                 val searchText = text.toString().toLowerCase(Locale.getDefault())
 
@@ -114,8 +114,8 @@ class MainActivity : AppCompatActivity(), AppAdapter.ItemClickListener {
 
     private fun resetSearch() {
         toolbarBinding.mainToolbar.show()
-        searchBinding.mainToolbarSearchTextField.setText("")
-        searchBinding.mainToolbarSearch.hide()
+        searchBinding.mainSearchBarTextField.setText("")
+        searchBinding.mainSearchBarParent.hide()
     }
 
     private fun getFilteredRestaurants(searchText: String): List<Restaurant> {

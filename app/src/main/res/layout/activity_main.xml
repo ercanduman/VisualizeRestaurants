@@ -20,8 +20,8 @@
             layout="@layout/activity_main_toolbar" />
 
         <include
-            android:id="@+id/activity_main_toolbar_search"
-            layout="@layout/activity_main_toolbar_search" />
+            android:id="@+id/activity_main_search_bar"
+            layout="@layout/activity_main_search_bar" />
     </com.google.android.material.appbar.MaterialToolbar>
 
     <Spinner
