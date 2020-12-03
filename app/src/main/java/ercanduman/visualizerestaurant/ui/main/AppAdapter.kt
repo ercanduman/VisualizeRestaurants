@@ -3,13 +3,14 @@ package ercanduman.visualizerestaurant.ui.main
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import ercanduman.visualizerestaurant.R
 import ercanduman.visualizerestaurant.data.db.entity.Restaurant
-import kotlinx.android.synthetic.main.list_item_restaurant.view.*
 
 /**
  * Responsible to provide views that represents items in list.
@@ -70,11 +71,16 @@ class AppAdapter(private val listener: ItemClickListener) :
     fun getCurrentItem(position: Int): Restaurant = listDiffer.currentList[position]
 
     inner class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val favorite: ImageView = itemView.findViewById(R.id.item_favorite)
+        val itemName: TextView = itemView.findViewById(R.id.item_name)
+        val openingState: TextView = itemView.findViewById(R.id.item_opening_state)
+        val sortValue: TextView = itemView.findViewById(R.id.item_sorting_value)
+
+        /**
+         * Item clicks will be passed to listener
+         */
         init {
-            /**
-             * Item clicks will be passed to listener
-             */
-            itemView.item_favorite.setOnClickListener {
+            favorite.setOnClickListener {
                 val position = adapterPosition
 
                 /**
@@ -93,17 +99,20 @@ class AppAdapter(private val listener: ItemClickListener) :
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val restaurant = listDiffer.currentList[position]
-        holder.itemView.apply {
-            item_name.text = restaurant.name
-            val openingState = context.getString(R.string.format_opening_state, restaurant.status)
-            item_opening_state.text = openingState
+        holder.apply {
+            val context = itemView.context
+            itemName.text = restaurant.name
+            val openingStateText =
+                context.getString(R.string.format_opening_state, restaurant.status)
+            openingState.text = openingStateText
 
-            val sortValue = context.getString(R.string.format_sort_value, getSortValue(restaurant))
-            item_sorting_value.text = sortValue
+            val sortValueText =
+                context.getString(R.string.format_sort_value, getSortValue(restaurant))
+            sortValue.text = sortValueText
 
             val drawable =
                 if (restaurant.isFavorite) R.drawable.ic_favorite else R.drawable.ic_favorite_border
-            item_favorite.setImageDrawable(ContextCompat.getDrawable(context, drawable))
+            holder.favorite.setImageDrawable(ContextCompat.getDrawable(context, drawable))
         }
     }
 
