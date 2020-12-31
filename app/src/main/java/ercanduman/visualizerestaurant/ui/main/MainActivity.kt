@@ -18,6 +18,15 @@ import ercanduman.visualizerestaurant.ui.utils.show
 import kotlinx.coroutines.launch
 import java.util.*
 
+/**
+ * The main UI which all user interactions will be handled and also items list will be displayed.
+ *
+ * Annotation on an Activity with @AndroidEntryPoint enables member injection into activity class.
+ *
+ * @author ERCAN DUMAN
+ * @since  26.11.2020
+ *
+ */
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), AppAdapter.ItemClickListener {
     private val viewModel: AppViewModel by viewModels()

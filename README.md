@@ -29,7 +29,7 @@ Following diagram will be used as reference which shows basic form of MVVM archi
 
 The application will read JSON content from [sample.json](https://raw.githubusercontent.com/ercanduman/VisualizeRestaurants/master/app/src/main/assets/sample_android.json "sample.json"). Thanks to GSON library this content will be converted into Kotlin data classes. 
 
-As dependency injection, Dagger-Hilt library will be used. Dagger-Hilt takes care of injecting members into the Android class as well as handling and instantiating the proper Hilt components at the right point in the lifecycle. Dagger-Hilt libraryr will provide Singleton instances of Room database and DAO. Room is where storing data locally and data access object (DAO) contains functions for database queries.
+As dependency injection, Dagger-Hilt library will be used. Dagger-Hilt takes care of injecting members into the Android class as well as handling and instantiating the proper Hilt components at the right point in the lifecycle. Dagger-Hilt library will provide Singleton instances of Room database and DAO. Room is where storing data locally and data access object (DAO) contains functions for database queries.
 
 Repository object will be responsible to retrieve data from data sources and provide this data to ViewModel. Coroutines and suspend functions will be used for running background operations.
 
@@ -40,13 +40,23 @@ Main Activity is the main UI which all user interactions will be handled and als
 
 ### Sorting Options
 
-Spinner UI element is used for sorting options. Spinners provides a quick way to select one value from sorting options. In the default state, "bestMatches" used for restaurant list. Touching the spinner displays a dropdown menu with all other available values which can be best match, newest, rating average, distance, popularity, average product price, delivery costs or the minimum cost.
-
-<img src="https://raw.githubusercontent.com/ercanduman/VisualizeRestaurants/master/output/Screenshot_1606802733.png" width="25%" title="Sorting Options">
+Spinner UI element is used for sorting options. Spinners provides a quick way to select one value from sorting options. In the default state, "bestMatches" used for restaurant list. 
+Touching the spinner displays a dropdown menu with all other available values which can be;
+ - best match
+ - newest
+ - average
+ - distance
+ - popularity
+ - average product price
+ - delivery costs
+ - the minimum cost.
+ 
+##### Sorting Options Image: 
+ <img src="https://raw.githubusercontent.com/ercanduman/VisualizeRestaurants/master/output/Screenshot_1606802733.png" width="25%" title="Sorting Options">
 
 ### Filtering 
 
-Similar to WhatsApp app search toolbar added for search(filtering) functionality. Text changes in search text field applied to restaurant list and if any Restaurant's name contains queried test, then these objects listed in RecyclerView.
+Similar to WhatsApp app search toolbar added for search(or filtering) functionality. Text changes in search field is applied to restaurant list and if any Restaurant has name contains queried text, then these items will be listed in RecyclerView.
 
 <img src="https://raw.githubusercontent.com/ercanduman/VisualizeRestaurants/master/output/Screenshot_1606802759.png" width="25%" title="Filtering">
 
@@ -54,7 +64,7 @@ Similar to WhatsApp app search toolbar added for search(filtering) functionality
 A compressed apk file build and added to [/output/apk](https://github.com/ercanduman/VisualizeRestaurants/blob/master/output/apk/debug.zip "/output/apk") directory. This apk can be installed easily and used to run application.
 
 ####  Build
-This application uses the Gradle build system. To build this project use "Import Project" in Android Studio and use following command.
+This application uses the Gradle build system. To build this project use "Import Project" in Android Studio and use the following command.
 `> gradlew build`
 
 ###  Test

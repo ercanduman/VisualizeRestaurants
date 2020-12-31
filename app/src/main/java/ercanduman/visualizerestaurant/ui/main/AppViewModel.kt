@@ -81,16 +81,15 @@ class AppViewModel
         o1: Restaurant,
         o2: Restaurant
     ): Int {
-        return when (sortType.name) {
-            "bestMatch" -> o1.sortingValues.bestMatch.compareTo(o2.sortingValues.bestMatch)
-            "newest" -> o1.sortingValues.newest.compareTo(o2.sortingValues.newest)
-            "ratingAverage" -> o1.sortingValues.ratingAverage.compareTo(o2.sortingValues.ratingAverage)
-            "distance" -> o1.sortingValues.distance.compareTo(o2.sortingValues.distance)
-            "popularity" -> o1.sortingValues.popularity.compareTo(o2.sortingValues.popularity)
-            "averageProductPrice" -> o1.sortingValues.averageProductPrice.compareTo(o2.sortingValues.averageProductPrice)
-            "deliveryCosts" -> o1.sortingValues.deliveryCosts.compareTo(o2.sortingValues.deliveryCosts)
-            "minCost" -> o1.sortingValues.minCost.compareTo(o2.sortingValues.minCost)
-            else -> 0
+        return when (sortType) {
+            SortType.bestMatch -> o1.sortingValues.bestMatch.compareTo(o2.sortingValues.bestMatch)
+            SortType.newest -> o1.sortingValues.newest.compareTo(o2.sortingValues.newest)
+            SortType.ratingAverage -> o1.sortingValues.ratingAverage.compareTo(o2.sortingValues.ratingAverage)
+            SortType.distance -> -o1.sortingValues.distance.compareTo(o2.sortingValues.distance)
+            SortType.popularity -> o1.sortingValues.popularity.compareTo(o2.sortingValues.popularity)
+            SortType.averageProductPrice -> o1.sortingValues.averageProductPrice.compareTo(o2.sortingValues.averageProductPrice)
+            SortType.deliveryCosts -> -o1.sortingValues.deliveryCosts.compareTo(o2.sortingValues.deliveryCosts)
+            SortType.minCost -> -o1.sortingValues.minCost.compareTo(o2.sortingValues.minCost)
         }
     }
 }
