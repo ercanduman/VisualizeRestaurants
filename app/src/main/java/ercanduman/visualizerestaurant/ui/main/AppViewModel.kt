@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ercanduman.visualizerestaurant.data.base.BaseRepository
 import ercanduman.visualizerestaurant.data.db.entity.Restaurant
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 /**
@@ -23,10 +24,11 @@ class AppViewModel
 
     /**
      * Updates object and send parameter object to repository.
+     *
      * @param restaurant Restaurant
      */
-    internal fun update(restaurant: Restaurant) {
-        viewModelScope.launch { repository.update(restaurant) }
+    internal fun update(restaurant: Restaurant) = viewModelScope.launch {
+        repository.update(restaurant)
     }
 
     private val allItems = MediatorLiveData<List<Restaurant>>()
@@ -38,7 +40,7 @@ class AppViewModel
      */
     internal fun getRestaurants(): LiveData<List<Restaurant>> {
         viewModelScope.launch {
-            allItems.addSource(repository.getRestaurants()) { items ->
+            repository.getRestaurants().collect { items ->
                 allItems.value = sortItems(items)
             }
         }

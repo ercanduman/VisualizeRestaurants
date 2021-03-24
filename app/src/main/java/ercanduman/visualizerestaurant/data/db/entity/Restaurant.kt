@@ -23,8 +23,6 @@ data class Restaurant(
     @SerializedName("name") val name: String,
     @SerializedName("status") val status: String,
     @SerializedName("sortingValues") val sortingValues: SortingValues,
-    var isFavorite: Boolean = false
-) {
-    @PrimaryKey(autoGenerate = true)
-    var id: Int = 0
-}
+    var isFavorite: Boolean = false,
+    @PrimaryKey(autoGenerate = true) var id: Int = 0
+)
