@@ -1,4 +1,4 @@
-package com.enbcreative.castleway.util
+package ercanduman.visualizerestaurant.util
 
 /*
  * Copyright (C) 2019 The Android Open Source Project

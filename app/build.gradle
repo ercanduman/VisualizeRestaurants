@@ -59,11 +59,15 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.3.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     // Architecture Components Test
+    testImplementation "androidx.arch.core:core-testing:2.1.0"
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.2'
     androidTestImplementation "androidx.arch.core:core-testing:2.1.0"
     androidTestImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.2'
     //DI for testing
     androidTestImplementation "com.google.dagger:hilt-android-testing:2.29.1-alpha"
     kaptAndroidTest "com.google.dagger:hilt-android-compiler:2.29.1-alpha"
+    // Google Truth library
+    testImplementation "com.google.truth:truth:1.0.1"
     // Mockito framework
     testImplementation 'org.mockito:mockito-core:2.21.0'
     testImplementation 'org.mockito:mockito-inline:2.8.47'
