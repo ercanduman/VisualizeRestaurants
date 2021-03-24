@@ -1,4 +1,4 @@
-package ercanduman.visualizerestaurant.util
+package ercanduman.visualizerestaurant.data.repository
 
 import ercanduman.visualizerestaurant.data.base.BaseRepository
 import ercanduman.visualizerestaurant.data.db.entity.Restaurant
@@ -34,15 +34,17 @@ class FakeAppRepository : BaseRepository {
     }
 
     private fun getFakeRestaurants(): MutableMap<Int, Restaurant> {
-        val sortingValues = SortingValues(1, 1.1, 1, 1, 1, 1.1, 1.1, 1.1)
-        val restaurant1 = Restaurant("Test Restaurant1", "open", sortingValues, id = 1)
-        val restaurant2 = Restaurant("Test Restaurant2", "Closed", sortingValues, id = 2)
-        val restaurant3 = Restaurant("Test Restaurant3", "Order ahead", sortingValues, id = 3)
+        val sortingValuesDefault = SortingValues(1, 1.1, 1, 100, 1, 1.1, 1.1, 1.1)
+        val sortingValuesMinDistance = SortingValues(1, 1.1, 1, 1, 1, 1.1, 1.1, 1.1)
+        val restaurant1 = Restaurant("Restaurant1", "open", sortingValuesDefault, id = 1)
+        val restaurant2 = Restaurant("Restaurant2", "Closed", sortingValuesDefault, id = 2)
+        val restaurant3 = Restaurant("Restaurant3", "Order ahead", sortingValuesDefault, id = 3)
+        val restaurant4 = Restaurant("Restaurant4", "open", sortingValuesMinDistance, id = 4)
 
-        return mutableMapOf(
-            1 to restaurant1,
-            2 to restaurant2,
-            3 to restaurant3
-        )
+        return mutableMapOf(1 to restaurant1, 2 to restaurant2, 3 to restaurant3, 4 to restaurant4)
+    }
+
+    companion object {
+        const val ITEM_COUNT = 4
     }
 }

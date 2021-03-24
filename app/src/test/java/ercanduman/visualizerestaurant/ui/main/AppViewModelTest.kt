@@ -3,7 +3,7 @@ package ercanduman.visualizerestaurant.ui.main
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.google.common.truth.Truth.assertThat
 import ercanduman.visualizerestaurant.data.base.BaseRepository
-import ercanduman.visualizerestaurant.util.FakeAppRepository
+import ercanduman.visualizerestaurant.data.repository.FakeAppRepository
 import ercanduman.visualizerestaurant.util.MainDispatcherRule
 import ercanduman.visualizerestaurant.util.getOrAwaitValueTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -40,7 +40,7 @@ class AppViewModelTest {
     @Test
     fun test_get_restaurant_list() {
         val restaurants = viewModel.getRestaurants().getOrAwaitValueTest()
-        assertThat(restaurants.size).isEqualTo(3)
+        assertThat(restaurants.size).isEqualTo(FakeAppRepository.ITEM_COUNT)
     }
 
     @Test
@@ -65,5 +65,36 @@ class AppViewModelTest {
         val updatedRestaurants = viewModel.getRestaurants().getOrAwaitValueTest()
         val updated = updatedRestaurants.first { it.id == currentRestaurant.id }
         assertThat(updated.name).isEqualTo(updatedName)
+    }
+
+    @Test
+    fun test_favorite_items_always_at_top() {
+        val restaurantList = viewModel.getRestaurants().getOrAwaitValueTest()
+
+        val updated = restaurantList[restaurantList.size - 1]
+        viewModel.update(updated.copy(isFavorite = true))
+
+        val updatedList = viewModel.getRestaurants().getOrAwaitValueTest()
+        val favoriteItem = updatedList[0]
+
+        assertThat(updated.name).isEqualTo(favoriteItem.name)
+    }
+
+    @Test
+    fun test_sorted_items_based_on_opening_state() {
+        val restaurants = viewModel.getRestaurants().getOrAwaitValueTest()
+        val currentItem = restaurants[0]
+        assertThat(currentItem.status).isEqualTo("open")
+    }
+
+    @Test
+    fun test_sort_items_based_on_nearest_distance() {
+        viewModel.sortType = SortType.distance
+        val restaurants = viewModel.getRestaurants().getOrAwaitValueTest()
+        val minDistanceItem = restaurants[0]
+
+        // find restaurant based on min distance
+        val filteredItem = restaurants.minByOrNull { it.sortingValues.distance }
+        assertThat(minDistanceItem).isEqualTo(filteredItem)
     }
 }
