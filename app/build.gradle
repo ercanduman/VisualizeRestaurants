@@ -54,7 +54,7 @@ dependencies {
     implementation 'android.arch.lifecycle:extensions:1.1.1'
 
     // Test
-    testImplementation 'junit:junit:4.13.1'
+    testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.3.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
@@ -64,6 +64,9 @@ dependencies {
     //DI for testing
     androidTestImplementation "com.google.dagger:hilt-android-testing:2.29.1-alpha"
     kaptAndroidTest "com.google.dagger:hilt-android-compiler:2.29.1-alpha"
+    // Mockito framework
+    testImplementation 'org.mockito:mockito-core:2.21.0'
+    testImplementation 'org.mockito:mockito-inline:2.8.47'
 
     // Room Database and Room Kotlin Extensions
     implementation "androidx.room:room-ktx:2.2.5"
