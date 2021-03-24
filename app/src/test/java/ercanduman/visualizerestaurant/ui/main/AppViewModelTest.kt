@@ -38,8 +38,32 @@ class AppViewModelTest {
     }
 
     @Test
-    fun test_success() {
-        val list = viewModel.getRestaurants().getOrAwaitValueTest()
-        assertThat(list.size).isEqualTo(3)
+    fun test_get_restaurant_list() {
+        val restaurants = viewModel.getRestaurants().getOrAwaitValueTest()
+        assertThat(restaurants.size).isEqualTo(3)
+    }
+
+    @Test
+    fun test_update_restaurant() {
+        val restaurants = viewModel.getRestaurants().getOrAwaitValueTest()
+
+        val updatedName = "Test Restaurant UPDATED"
+        val currentRestaurant = restaurants[0]
+
+        viewModel.update(currentRestaurant.copy(name = updatedName))
+    }
+
+    @Test
+    fun test_update_restaurant_and_check_if_available() {
+        val restaurants = viewModel.getRestaurants().getOrAwaitValueTest()
+
+        val updatedName = "Test Restaurant UPDATED"
+        val currentRestaurant = restaurants[0]
+
+        viewModel.update(currentRestaurant.copy(name = updatedName))
+
+        val updatedRestaurants = viewModel.getRestaurants().getOrAwaitValueTest()
+        val updated = updatedRestaurants.first { it.id == currentRestaurant.id }
+        assertThat(updated.name).isEqualTo(updatedName)
     }
 }
