@@ -1,11 +1,12 @@
 package ercanduman.visualizerestaurant.data.repository
 
-import androidx.lifecycle.LiveData
+import androidx.lifecycle.asFlow
 import ercanduman.visualizerestaurant.data.base.BaseRepository
 import ercanduman.visualizerestaurant.data.datasource.LocalDataSource
 import ercanduman.visualizerestaurant.data.db.dao.RestaurantDao
 import ercanduman.visualizerestaurant.data.db.entity.Restaurant
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -31,13 +32,13 @@ class AppRepository @Inject constructor(
      *
      * @return LiveData<List<Restaurant>>
      */
-    override suspend fun getRestaurants(): LiveData<List<Restaurant>> {
+    override suspend fun getRestaurants(): Flow<List<Restaurant>> {
         return withContext(Dispatchers.IO) {
             val count = dao.getCount()
             if (count == 0) {
                 dao.insert(localSource.getRestaurants())
             }
-            dao.getAllRestaurants()
+            dao.getAllRestaurants().asFlow()
         }
     }
 

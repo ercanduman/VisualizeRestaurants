@@ -1,10 +1,10 @@
 package ercanduman.visualizerestaurant.util
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import ercanduman.visualizerestaurant.data.base.BaseRepository
 import ercanduman.visualizerestaurant.data.db.entity.Restaurant
 import ercanduman.visualizerestaurant.data.db.entity.SortingValues
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 
 /**
  * Fake implementation of Repository in order to use in ViewModel test cases.
@@ -22,22 +22,22 @@ class FakeAppRepository : BaseRepository {
     /**
      * Simulates LiveData for getRestaurants() function.
      */
-    private val observableRestaurants = MutableLiveData(restaurants.values.toList())
+    private var observableRestaurants: Flow<List<Restaurant>> = flowOf(restaurants.values.toList())
 
-    override suspend fun getRestaurants(): LiveData<List<Restaurant>> {
+    override suspend fun getRestaurants(): Flow<List<Restaurant>> {
         return observableRestaurants
     }
 
     override suspend fun update(restaurant: Restaurant) {
         restaurants.replace(restaurant.id, restaurant)
-        observableRestaurants.postValue(restaurants.values.toList())
+        observableRestaurants = flowOf(restaurants.values.toList())
     }
 
     private fun getFakeRestaurants(): MutableMap<Int, Restaurant> {
         val sortingValues = SortingValues(1, 1.1, 1, 1, 1, 1.1, 1.1, 1.1)
-        val restaurant1 = Restaurant("Test Restaurant1", "open", sortingValues)
-        val restaurant2 = Restaurant("Test Restaurant2", "Closed", sortingValues)
-        val restaurant3 = Restaurant("Test Restaurant3", "Order ahead", sortingValues)
+        val restaurant1 = Restaurant("Test Restaurant1", "open", sortingValues, id = 1)
+        val restaurant2 = Restaurant("Test Restaurant2", "Closed", sortingValues, id = 2)
+        val restaurant3 = Restaurant("Test Restaurant3", "Order ahead", sortingValues, id = 3)
 
         return mutableMapOf(
             1 to restaurant1,

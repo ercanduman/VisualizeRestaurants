@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ercanduman.visualizerestaurant.data.base.BaseRepository
 import ercanduman.visualizerestaurant.data.db.entity.Restaurant
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 /**
@@ -39,7 +40,7 @@ class AppViewModel
      */
     internal fun getRestaurants(): LiveData<List<Restaurant>> {
         viewModelScope.launch {
-            allItems.addSource(repository.getRestaurants()) { items ->
+            repository.getRestaurants().collect { items ->
                 allItems.value = sortItems(items)
             }
         }
