@@ -94,6 +94,7 @@ class MainActivityTest {
     @Test
     fun test_check_is_recycler_view_items_can_be_clicked() {
         onView(withId(R.id.main_recycler_view_restaurants))
+            .check(matches(isDisplayed()))
             .perform(actionOnItemAtPosition<AppAdapter.ItemViewHolder>(0, click()))
     }
 

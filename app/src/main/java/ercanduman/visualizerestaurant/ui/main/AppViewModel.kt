@@ -23,10 +23,11 @@ class AppViewModel
 
     /**
      * Updates object and send parameter object to repository.
+     *
      * @param restaurant Restaurant
      */
-    internal fun update(restaurant: Restaurant) {
-        viewModelScope.launch { repository.update(restaurant) }
+    internal fun update(restaurant: Restaurant) = viewModelScope.launch {
+        repository.update(restaurant)
     }
 
     private val allItems = MediatorLiveData<List<Restaurant>>()
